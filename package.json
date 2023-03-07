@@ -1,0 +1,51 @@
+{
+  "name": "strapi-plugin-snippets",
+  "version": "0.1.0",
+  "description": "A plugin for Strapi CMS that populates custom snippets into API response data.",
+  "license": "MIT",
+  "strapi": {
+    "displayName": "Snippets",
+    "name": "snippets",
+    "description": "Populates custom snippets into API response data.",
+    "kind": "plugin"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.6.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "author": {
+    "name": "Matt Milburn",
+    "url": "https://github.com/mattmilburn"
+  },
+  "maintainers": [
+    {
+      "name": "Matt Milburn",
+      "url": "https://github.com/mattmilburn"
+    }
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmilburn/strapi-plugin-snippets.git"
+  },
+  "keywords": [
+    "strapi",
+    "plugin",
+    "replace",
+    "replacement",
+    "shortcode",
+    "short code",
+    "shortcut",
+    "short cut",
+    "snippet",
+    "swap",
+    "switch",
+    "text"
+  ]
+}
