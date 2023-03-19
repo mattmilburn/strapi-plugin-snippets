@@ -1,5 +1,7 @@
 'use strict';
 
+const { getService } = require( '../../utils' );
+
 module.exports = {
   beforeUpdate: async event => {
     const { model, params } = event;
@@ -15,13 +17,56 @@ module.exports = {
   },
 
   afterUpdate: async event => {
-    const { code: previousValue } = event.state;
-    const nextValue = event.params.result.code;
+    const previousValue = event.state.code;
+    const nextValue = event.result.code;
 
-    if ( nextValue !== previousValue ) {
-      /**
-       * @TODO Update collections with new code name.
-       */
+    if ( nextValue === previousValue ) {
+      return;
     }
+
+    const snippetService = getService( 'snippets' );
+    const uids = snippetService.uids();
+    const containsQuery = { $contains: `{${previousValue}}` };
+
+    // Find entries using the previous `code` value so we can update them.
+    const promisedFinds = await Promise.all( uids.map( uid => {
+      const attrs = snippetService.getStringAttrs( uid );
+      const filters = {
+        $or: attrs.map( attr => ( {
+          [ attr ]: containsQuery,
+        } ) ),
+      };
+
+      /**
+       * @TODO - Maybe populate * here?
+       */
+      return strapi.entityService
+        /**
+         * @TODO - Differentiate between single and collection types.
+         */
+        .findMany( uid, { filters } )
+        .then( results => {
+          if ( ! results ) {
+            return;
+          }
+
+          return results
+            .filter( result => result )
+            .map( result => ( {
+              uid,
+              attrs,
+              results,
+            } ) );
+        } );
+    } ) );
+
+    console.log( 'WILL UPDATE', promisedFinds );
+
+    // // Update entries to replace the previous `code` value with the new one.
+    // const promisedUpdates = promisedFinds.map( ( { uid, attrs, entries } ) => {
+    //   //
+    // } );
+    //
+    // await Promise.all( promisedUpdates.flat() );
   },
 };
