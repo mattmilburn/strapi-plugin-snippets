@@ -41,32 +41,40 @@ module.exports = {
        * @TODO - Maybe populate * here?
        */
       return strapi.entityService
-        /**
-         * @TODO - Differentiate between single and collection types.
-         */
         .findMany( uid, { filters } )
-        .then( results => {
-          if ( ! results ) {
-            return;
+        .then( entries => {
+          if ( ! entries ) {
+            // Always return an array, which helps normalize code that operates
+            // with both singleType and collectionTypes.
+            return [];
           }
 
-          return results
-            .filter( result => result )
-            .map( result => ( {
+          return entries
+            .filter( entry => entry )
+            .map( entry => ( {
               uid,
               attrs,
-              results,
+              entries,
             } ) );
         } );
     } ) );
 
-    console.log( 'WILL UPDATE', promisedFinds );
+    // Update entries to replace the previous `code` value with the new one.
+    const promisedUpdates = promisedFinds.flat().map( ( { uid, attrs, entries } ) => {
+      return entries.map( entry => {
+        const data = attrs.reduce( ( acc, attr ) => ( {
+          ...acc,
+          [ attr ]: snippetService.updateSnippetInValue(
+            entry[ attr ],
+            previousValue,
+            nextValue
+          ),
+        } ), {} );
 
-    // // Update entries to replace the previous `code` value with the new one.
-    // const promisedUpdates = promisedFinds.map( ( { uid, attrs, entries } ) => {
-    //   //
-    // } );
-    //
-    // await Promise.all( promisedUpdates.flat() );
+        return strapi.entityService.update( uid, entry.id, { data } );
+      } );
+    } );
+
+    await Promise.all( promisedUpdates );
   },
 };

@@ -26,15 +26,15 @@ module.exports = ( { strapi } ) => ( {
     } );
   },
 
-  parseAttr( value ) {
+  uids() {
     /**
-     * @TODO - Parse `value` for `code` replacements.
+     * @TODO - Include file uploads here.
      */
 
-    return value;
+    return Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
   },
 
-  uids() {
-    return Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
+  updateSnippetInValue( value, oldCode, newCode ) {
+    return value.replace( `{${oldCode}}`, `{${newCode}}` );
   },
 } );
