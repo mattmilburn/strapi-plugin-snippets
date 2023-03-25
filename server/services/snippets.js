@@ -27,14 +27,17 @@ module.exports = ( { strapi } ) => ( {
   },
 
   uids() {
-    /**
-     * @TODO - Include file uploads here.
-     */
+    const apiModels= Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
+    const pluginModels = [ 'plugin::upload.file' ];
 
-    return Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
+    return [ ...apiModels, ...pluginModels ];
   },
 
   updateSnippetInValue( value, oldCode, newCode ) {
+    if ( ! value || typeof value !== 'string' ) {
+      return value;
+    }
+
     return value.replace( `{${oldCode}}`, `{${newCode}}` );
   },
 } );
