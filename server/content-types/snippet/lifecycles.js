@@ -1,6 +1,11 @@
 'use strict';
 
-const { getService } = require( '../../utils' );
+const {
+  getDeepContains,
+  getDeepPopulate,
+  getService,
+  getStrAttrs,
+} = require( '../../utils' );
 
 module.exports = {
   beforeUpdate: async event => {
@@ -30,20 +35,15 @@ module.exports = {
 
     // Find entries using the previous `code` value so we can update them.
     const promisedFinds = await Promise.all( uids.map( uid => {
-      const attrs = snippetService.getStringAttrs( uid );
       const filters = {
-        $or: attrs.map( attr => ( {
-          [ attr ]: containsQuery,
-        } ) ),
+        $or: getDeepContains( uid, containsQuery ),
+        populate: getDeepPopulate( uid ),
       };
 
-      /**
-       * @TODO - Maybe populate * here?
-       */
       return strapi.entityService
         .findMany( uid, { filters } )
         .then( entries => {
-          if ( ! entries ) {
+          if ( ! entries || ! entries.length ) {
             // Always return an array, which helps normalize code that operates
             // with both singleType and collectionTypes.
             return [];
@@ -53,14 +53,15 @@ module.exports = {
             .filter( entry => entry )
             .map( entry => ( {
               uid,
-              attrs,
               entries,
             } ) );
         } );
     } ) );
 
     // Update entries to replace the previous `code` value with the new one.
-    const promisedUpdates = promisedFinds.flat().map( ( { uid, attrs, entries } ) => {
+    const promisedUpdates = promisedFinds.flat().map( ( { uid, entries } ) => {
+      const attrs = getStrAttrs( uid );
+
       return entries.map( entry => {
         const data = attrs.reduce( ( acc, attr ) => ( {
           ...acc,
