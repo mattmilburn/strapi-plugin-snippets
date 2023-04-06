@@ -1,18 +1,17 @@
 'use strict';
 
-function getPopulateForDZ( attr, level ) {
-  // Use fragments to populate the dynamic zone components.
-  const populatedComponents = ( attr.components || [] ).reduce( ( acc, componentUID ) => ( {
-    ...acc,
-    [ componentUID ]: {
-      populate: getDeepPopulate( componentUID, level + 1 ),
-    },
-  } ), {} );
-
-  return {
-    on: populatedComponents,
-  };
-}
+// function getPopulateForDZ( attr, level ) {
+//   const populatedComponents = ( attr.components || [] ).reduce( ( acc, componentUID ) => ( {
+//     ...acc,
+//     [ componentUID ]: {
+//       populate: getDeepPopulate( componentUID, level + 1 ),
+//     },
+//   } ), {} );
+//
+//   return {
+//     on: populatedComponents,
+//   };
+// }
 
 function getPopulateFor( name, model, level ) {
   const attr = model.attributes[ name ];
@@ -25,10 +24,10 @@ function getPopulateFor( name, model, level ) {
         },
       };
 
-    case 'dynamiczone':
-      return {
-        [ name ]: getPopulateForDZ( attr, level ),
-      };
+    // case 'dynamiczone':
+    //   return {
+    //     [ name ]: getPopulateForDZ( attr, level ),
+    //   };
 
     default:
       return {};

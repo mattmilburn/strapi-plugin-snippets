@@ -12,25 +12,14 @@ module.exports = ( { strapi } ) => ( {
       } ), {} ) );
   },
 
-  getStringAttrs( uid ) {
-    const schema = strapi.contentTypes[ uid ];
-
-    if ( ! schema ) {
-      return [];
-    }
-
-    const attrs = schema.attributes;
-
-    return Object.keys( attrs ).filter( key => {
-      return [ 'customField', 'richtext', 'string', 'text' ].includes( attrs[ key ].type );
-    } );
-  },
-
   uids() {
     const apiModels= Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
     const pluginModels = [ 'plugin::upload.file' ];
 
-    return [ ...apiModels, ...pluginModels ];
+    return [
+      ...apiModels,
+      ...pluginModels,
+    ];
   },
 
   updateSnippetInValue( value, oldCode, newCode ) {
