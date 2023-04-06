@@ -12,7 +12,9 @@
   "peerDependencies": {
     "@strapi/strapi": "^4.6.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "4.17.21"
+  },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
