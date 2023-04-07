@@ -8,15 +8,15 @@ const isString = require( 'lodash/isString' );
 const { getService, interpolate, isApiRequest } = require( '../utils' );
 
 // Transform function which is used to transform the response object.
-const transform = ( data, snippets ) => {
+const transform = ( data, config, snippets ) => {
   // Single entry.
   if ( has( data, 'attributes' ) ) {
-    return transform( data.attributes, snippets );
+    return transform( data.attributes, config, snippets );
   }
 
   // Collection of entries.
   if ( isArray( data ) && data.length && has( head( data ), 'attributes' ) ) {
-    return data.map( item => transform( item, snippets ) );
+    return data.map( item => transform( item, config, snippets ) );
   }
 
   // Loop through properties.
@@ -27,17 +27,17 @@ const transform = ( data, snippets ) => {
 
     // Single component.
     if ( has( value, 'id' ) ) {
-      data[ key ] = transform( value, snippets );
+      data[ key ] = transform( value, config, snippets );
     }
 
     // Repeatable component or dynamic zone.
     if ( isArray( value ) && has( head( value ), 'id' ) ) {
-      data[ key ] = value.map( component => transform( component, snippets ) );
+      data[ key ] = value.map( component => transform( component, config, snippets ) );
     }
 
     // Finally, replace the shortcode in string values.
     if ( isString( value ) ) {
-      data[ key ] = interpolate( value, snippets );
+      data[ key ] = interpolate( value, snippets, config.ignoreUnmatched );
     }
   } );
 
@@ -58,12 +58,13 @@ module.exports = async ( { strapi } ) => {
     }
 
     // Do nothing if there are no snippets in the database.
+    const config = await getService( 'config' ).get();
     const snippets = await getService( 'snippets' ).get();
 
     if ( ! snippets ) {
       return;
     }
 
-    ctx.body.data = transform( ctx.body.data, snippets );
+    ctx.body.data = transform( ctx.body.data, config, snippets );
   } );
 };

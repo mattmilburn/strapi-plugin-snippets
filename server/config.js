@@ -3,7 +3,7 @@
 module.exports = {
   default: {
     contentTypes: null,
-    ignoreUnmatched: true,
+    ignoreUnmatched: false,
     uppercase: true,
   },
   validator: config => {
