@@ -3,6 +3,17 @@
 const { getService, getStrAttrs } = require( '../../utils' );
 
 module.exports = {
+  beforeCreate: async event => {
+    const { params } = event;
+    const { data } = params;
+    const config = await getService( 'config' ).get();
+
+    // Maybe apply uppercase formatting to the `code` value.
+    if ( config.uppercase ) {
+      event.params.data.code = data.code.toUpperCase();
+    }
+  },
+
   beforeUpdate: async event => {
     const { model, params } = event;
     const { data, where } = params;
