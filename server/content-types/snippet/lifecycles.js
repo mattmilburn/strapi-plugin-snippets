@@ -31,9 +31,9 @@ module.exports = {
       return;
     }
 
-    const configService = await getService( 'config' );
+    const configService = getService( 'config' );
     const snippetService = getService( 'snippets' );
-    const uids = configService.uids();
+    const uids = await configService.uids();
 
     // Find entries using the previous `code` value so we can update them.
     const promisedFinds = await Promise.all( uids.map( uid => {

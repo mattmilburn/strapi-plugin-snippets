@@ -10,18 +10,24 @@ module.exports = ( { strapi } ) => ( {
     return config;
   },
 
-  /**
-   * @TODO - Include plugin config options.
-   */
-  uids() {
-    const apiModels = Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
-    const componentModels = Object.keys( strapi.components );
+  async uids() {
+    const { contentTypes } = await this.get();
+    const allowUIDs = contentTypes.allow || [];
+    const denyUIDs = contentTypes.deny || [];
+
+    const apiModels = Object.keys( strapi.contentTypes ).filter( uid => {
+      return uid.includes( 'api::' ) && ! denyUIDs.includes( uid );
+    } );
+    const componentModels = Object.keys( strapi.components ).filter( uid => {
+       return ! denyUIDs.includes( uid );
+    } );
     const pluginModels = [ 'plugin::upload.file' ];
 
     return [
       ...apiModels,
       ...componentModels,
       ...pluginModels,
+      ...allowUIDs,
     ];
   },
 } );
