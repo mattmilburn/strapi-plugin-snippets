@@ -57,11 +57,14 @@ module.exports = async ( { strapi } ) => {
       return;
     }
 
-    // Do nothing if there are no snippets in the database.
-    const config = await getService( 'config' ).get();
+    // Do nothing if this model is not supported or there are no snippets in the database.
+    const configService = getService( 'config' );
+    const config = await configService.get();
+    const uids = await configService.uids();
+    const uid = uids.find( _uid => ctx.state.route.handler.includes( _uid ) );
     const snippets = await getService( 'snippets' ).get();
 
-    if ( ! snippets ) {
+    if ( ! uid || ! snippets ) {
       return;
     }
 

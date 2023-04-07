@@ -1,5 +1,7 @@
 'use strict';
 
+const get = require( 'lodash/get' );
+
 const { default: defaultConfig } = require( '../config' );
 const { pluginId } = require( '../utils' );
 
@@ -12,14 +14,14 @@ module.exports = ( { strapi } ) => ( {
 
   async uids() {
     const { contentTypes } = await this.get();
-    const allowUIDs = contentTypes.allow || [];
-    const denyUIDs = contentTypes.deny || [];
+    const allowModels = get( contentTypes, 'allow', [] );
+    const denyModels = get( contentTypes, 'deny', [] );
 
     const apiModels = Object.keys( strapi.contentTypes ).filter( uid => {
-      return uid.includes( 'api::' ) && ! denyUIDs.includes( uid );
+      return uid.includes( 'api::' ) && ! denyModels.includes( uid );
     } );
     const componentModels = Object.keys( strapi.components ).filter( uid => {
-       return ! denyUIDs.includes( uid );
+       return ! denyModels.includes( uid );
     } );
     const pluginModels = [ 'plugin::upload.file' ];
 
@@ -27,7 +29,7 @@ module.exports = ( { strapi } ) => ( {
       ...apiModels,
       ...componentModels,
       ...pluginModels,
-      ...allowUIDs,
+      ...allowModels,
     ];
   },
 } );
