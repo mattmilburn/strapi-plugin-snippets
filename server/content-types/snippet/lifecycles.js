@@ -5,8 +5,15 @@ const { getService, getStrAttrs } = require( '../../utils' );
 module.exports = {
   beforeUpdate: async event => {
     const { model, params } = event;
-    const { where } = params;
+    const { data, where } = params;
+    const config = await getService( 'config' ).get();
 
+    // Maybe apply uppercase formatting to the `code` value.
+    if ( config.uppercase ) {
+      event.params.data.code = data.code.toUpperCase();
+    }
+
+    // Store the previous state of the entity that is about to be updated.
     const entity = await strapi.db.query( model.uid ).findOne( { where } );
 
     if ( ! entity ) {
@@ -24,7 +31,7 @@ module.exports = {
       return;
     }
 
-    const configService = getService( 'config' );
+    const configService = await getService( 'config' );
     const snippetService = getService( 'snippets' );
     const uids = configService.uids();
 
