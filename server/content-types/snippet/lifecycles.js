@@ -24,8 +24,9 @@ module.exports = {
       return;
     }
 
+    const configService = getService( 'config' );
     const snippetService = getService( 'snippets' );
-    const uids = snippetService.uids();
+    const uids = configService.uids();
 
     // Find entries using the previous `code` value so we can update them.
     const promisedFinds = await Promise.all( uids.map( uid => {

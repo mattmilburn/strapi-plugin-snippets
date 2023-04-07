@@ -12,18 +12,6 @@ module.exports = ( { strapi } ) => ( {
       } ), {} ) );
   },
 
-  uids() {
-    const apiModels = Object.keys( strapi.contentTypes ).filter( key => key.includes( 'api::' ) );
-    const componentModels = Object.keys( strapi.components );
-    const pluginModels = [ 'plugin::upload.file' ];
-
-    return [
-      ...apiModels,
-      ...componentModels,
-      ...pluginModels,
-    ];
-  },
-
   updateSnippetInValue( value, oldCode, newCode ) {
     if ( ! value || typeof value !== 'string' ) {
       return value;
