@@ -1,13 +1,13 @@
 'use strict';
 
 const getStrAttrs = uid => {
-  const schema = strapi.contentTypes[ uid ];
+  const model = strapi.getModel( uid );
 
-  if ( ! schema ) {
+  if ( ! model ) {
     return [];
   }
 
-  const attrs = schema.attributes;
+  const attrs = model.attributes;
   const supportedFieldTypes = [ 'customField', 'richtext', 'string', 'text' ];
 
   return Object.keys( attrs ).filter( key => {
