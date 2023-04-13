@@ -29,14 +29,14 @@ yarn add strapi-plugin-snippets@latest
 ## <a id="configuration"></a>🔧 Configuration
 | property | type (default) | description |
 | - | - | - |
-| contentTypes | object (`null`) | An optional config object that allows configuring which models should support snippets. |
+| contentTypes | object (`null`) | An optional config object that allows configuring which additional models should or should not support snippets. |
 | contentTypes.allow | array (`null`) | An array of either model, plugin, or component UIDs which support snippets. |
 | contentTypes.deny | array (`null`) | An array of either model, plugin, or component UIDs which DO NOT support snippets. |
 | ignoreUnmatched | bool (`false`) | If true, unmatched `codes` will remain unparsed in response data, otherwise they are replaced with an empty string. |
 | uppercase | bool (`true`) | If true, the plugin will apply uppercase formatting to the `code` value when a snippet is created or updated. |
 
 ### `contentTypes`
-By default, all API models and components are affected by the snippets plugin. Plugin models are not automatically included.
+By default, all API models and components are parsed by the snippets plugin. However, models defined in plugins are not automatically included.
 
 Use the `allow` and `deny` props of `contentTypes` to include or exclude certain UIDs which can include API content types, plugin content types, and components.
 
@@ -67,9 +67,6 @@ module.exports = {
 If true, unmatched `codes` will remain unparsed in response data, otherwise they are replaced with an empty string.
 
 #### Example
-Consider a scenario where we have 2 snippets, one called `SNIPPET_ONE` and another called `SNIPPET_TWO` and both will be replaced with the string "foobar". We also have an entity with a `title` and `summary` fields where both fields use snippets.
-
-The snippet named `SNIPPET_MISSING` does not actually exist and will either be replaced with an empty string or ignored completely. See the example below.
 
 ```js
 // ./config/plugins.js`
@@ -84,6 +81,9 @@ module.exports = {
 };
 ```
 
+Consider a scenario where we have 2 snippets, one called `SNIPPET_ONE` and another called `SNIPPET_TWO` and both will be replaced with the string "foobar". We also have an entity with a `title` and `summary` fields where both fields use snippets.
+
+The snippet named `SNIPPET_MISSING` does not actually exist and will either be replaced with an empty string or ignored completely. See the example below.
 
 ##### Response data BEFORE parsing snippets
 
