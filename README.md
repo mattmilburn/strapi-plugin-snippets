@@ -17,7 +17,7 @@
 
 ## <a id="features"></a>✨ Features
 * Create variables to use throughout your content, which are replaced in API response data.
-* Copy and paste easily into your content fields.
+* Copy and paste easily into your text fields.
 * Updating the snippet `code` automatically updates all of your data entries in Strapi with the new `code`.
 * Supports API models, plugin models, components, and dynamic zones.
 
@@ -150,8 +150,11 @@ module.exports = {
 
 ## <a id="user-guide"></a>📘 User Guide
 
-### TBD
-<mark>@TODO</mark>
+### Using snippets in your content
+To use snippets in your content, you can use a snippet `code` wrapped in curly braces `{}` in string or text fields and it will be replaced with the `replacement` value when it appears in API response data.
+
+### Updating the snippet `code`
+After updating the `code` value of a snippet, it will be automatically updated across your content so you do not have to revisit and update every entry just to rename something.
 
 ## <a id="troubleshooting"></a>💩 Troubleshooting
 
@@ -168,5 +171,7 @@ yarn develop
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
 
 ## <a id="roadmap"></a>🚧 Roadmap
+* Option to parse string fields as number types in API response.
 * Edit view sidebar button to view and copy/paste snippet codes.
-* Localization support
+* Reserved snippet codes for things like `CURRENT_YEAR`.
+* Localization support.
