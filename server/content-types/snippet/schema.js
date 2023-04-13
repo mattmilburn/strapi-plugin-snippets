@@ -23,12 +23,10 @@ module.exports = {
   attributes: {
     code: {
       type: 'uid',
-      help: 'Put this code in curly braces {} to use it.',
       required: true,
     },
     replacement: {
-      type: 'string',
-      help: 'The final API value.',
+      type: 'text',
       required: true,
     },
   },
