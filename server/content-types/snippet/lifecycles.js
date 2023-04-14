@@ -6,9 +6,12 @@ module.exports = {
   beforeCreate: async event => {
     const { params } = event;
     const { data } = params;
-    const config = await getService( 'config' ).get();
+
+    await getService( 'validation' ).validateFormat( data.code );
 
     // Maybe apply uppercase formatting to the `code` value.
+    const config = await getService( 'config' ).get();
+
     if ( config.uppercase ) {
       event.params.data.code = data.code.toUpperCase();
     }
@@ -17,9 +20,12 @@ module.exports = {
   beforeUpdate: async event => {
     const { model, params } = event;
     const { data, where } = params;
-    const config = await getService( 'config' ).get();
+
+    await getService( 'validation' ).validateFormat( data.code );
 
     // Maybe apply uppercase formatting to the `code` value.
+    const config = await getService( 'config' ).get();
+
     if ( config.uppercase ) {
       event.params.data.code = data.code.toUpperCase();
     }
