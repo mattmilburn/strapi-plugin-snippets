@@ -1,8 +1,11 @@
-import { InputMask } from './components';
+import { Initializer, InputMask } from './components';
+import reducers from './reducers';
 import { pluginId, pluginName } from './utils';
 
 export default {
   register( app ) {
+    app.addReducers( reducers );
+
     app.injectContentManagerComponent( 'editView', 'right-links', {
       name: pluginId,
       Component: InputMask,
@@ -11,6 +14,8 @@ export default {
     app.registerPlugin( {
       id: pluginId,
       name: pluginName,
+      initializer: Initializer,
+      isReady: false,
     } );
   },
 };
