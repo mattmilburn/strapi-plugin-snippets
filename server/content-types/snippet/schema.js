@@ -22,8 +22,9 @@ module.exports = {
   },
   attributes: {
     code: {
-      type: 'uid',
+      type: 'string',
       required: true,
+      unique: true,
     },
     replacement: {
       type: 'text',
