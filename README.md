@@ -153,6 +153,10 @@ module.exports = {
 ### Using snippets in your content
 To use snippets in your content, you can use a snippet `code` wrapped in curly braces `{}` in string or text fields and it will be replaced with the `replacement` value when it appears in API response data.
 
+<div align="center">
+  <img style="width: 662px; height: auto;" src="public/screenshot-usage.png" alt="Screenshot for code usage with Strapi snippets plugin" />
+</div>
+
 ### Updating the snippet `code`
 After updating the `code` value of a snippet, it will be automatically updated across your content so you do not have to revisit and update every entry just to rename something.
 
