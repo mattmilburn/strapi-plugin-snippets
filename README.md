@@ -150,15 +150,23 @@ module.exports = {
 
 ## <a id="user-guide"></a>📘 User Guide
 
+### Creating
+While typing the snippet `code` you will notice the input value is masked to the following conditions:
+
+* Must use only letters, numbers, and underscores.
+* Must start with a letter.
+
+Uniqueness is validated upon saving.
+
+### Updating
+After updating the `code` value of a snippet, it will be automatically updated across your content so you do not have to revisit every entry to update the snippet `code` to the new value.
+
 ### Using snippets in your content
-To use snippets in your content, you can use a snippet `code` wrapped in curly braces `{}` in string or text fields and it will be replaced with the `replacement` value when it appears in API response data.
+To use snippets in your content, you can type a snippet `code` wrapped in curly braces `{}` in string or text fields and it will be replaced with the `replacement` value when it appears in API response data.
 
 <div align="center">
   <img style="width: 662px; height: auto;" src="public/screenshot-usage.png" alt="Screenshot for code usage with Strapi snippets plugin" />
 </div>
-
-### Updating the snippet `code`
-After updating the `code` value of a snippet, it will be automatically updated across your content so you do not have to revisit and update every entry just to rename something.
 
 ## <a id="troubleshooting"></a>💩 Troubleshooting
 
@@ -175,7 +183,7 @@ yarn develop
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
 
 ## <a id="roadmap"></a>🚧 Roadmap
-* Option to parse string fields as number types in API response.
+* Option to transform string type fields as number types in API response.
 * Edit view sidebar button to view and copy/paste snippet codes.
 * Reserved snippet codes for things like `CURRENT_YEAR`.
 * Localization support.
