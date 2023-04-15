@@ -1,7 +1,8 @@
 'use strict';
 
-const transformApiResponseMiddleware = require( './middlewares/transform-api-response' );
+const { transformSnippets } = require( './middlewares' );
 
 module.exports = async params => {
-  await transformApiResponseMiddleware( params );
+  // Middlewares.
+  await transformSnippets( params );
 };
