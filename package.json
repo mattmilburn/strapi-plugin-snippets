@@ -10,10 +10,16 @@
     "kind": "plugin"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.6.0"
+    "@strapi/helper-plugin": "^4.9.0",
+    "@strapi/strapi": "^4.9.0",
+    "@strapi/utils": "^4.9.0"
   },
   "dependencies": {
-    "lodash": "4.17.21"
+    "immer": "^9.0.21",
+    "lodash": "4.17.21",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-redux": "^8.0.5"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
