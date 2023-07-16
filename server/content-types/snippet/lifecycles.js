@@ -70,6 +70,9 @@ module.exports = {
             return [];
           }
 
+          /**
+           * @TODO - Investigate how `entry` goes unused in the map loop.
+           */
           return entries
             .filter( entry => entry )
             .map( entry => ( {
