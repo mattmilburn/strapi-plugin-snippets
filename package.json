@@ -9,22 +9,6 @@
     "description": "Populates custom snippets into API response data.",
     "kind": "plugin"
   },
-  "peerDependencies": {
-    "@strapi/helper-plugin": "^4.9.0",
-    "@strapi/strapi": "^4.9.0",
-    "@strapi/utils": "^4.9.0"
-  },
-  "dependencies": {
-    "immer": "^9.0.21",
-    "lodash": "4.17.21",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-redux": "^8.0.5"
-  },
-  "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
-  },
   "author": {
     "name": "Matt Milburn",
     "url": "https://github.com/mattmilburn"
@@ -35,8 +19,24 @@
       "url": "https://github.com/mattmilburn"
     }
   ],
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "immer": "^9.0.21",
+    "lodash": "4.17.21",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-redux": "^8.0.5"
+  },
+  "peerDependencies": {
+    "@strapi/helper-plugin": "^4.9.0",
+    "@strapi/strapi": "^4.9.0",
+    "@strapi/utils": "^4.9.0"
   },
   "repository": {
     "type": "git",
