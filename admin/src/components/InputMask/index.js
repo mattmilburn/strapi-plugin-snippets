@@ -6,23 +6,23 @@ import { UID_SNIPPET } from '../../constants';
 import { pluginId, sanitizeCode } from '../../utils';
 
 const InputMask = () => {
-  const { config } = useSelector( state => state[ `${pluginId}_config` ] );
+  const { config } = useSelector((state) => state[`${pluginId}_config`]);
   const { modifiedData, onChange, slug } = useCMEditViewDataManager();
   const code = modifiedData?.code;
 
-  useEffect( () => {
-    if ( slug !== UID_SNIPPET || ! code ) {
+  useEffect(() => {
+    if (slug !== UID_SNIPPET || !code) {
       return;
     }
 
-    onChange( {
+    onChange({
       target: {
         name: 'code',
-        value: sanitizeCode( code, config ),
+        value: sanitizeCode(code, config),
         type: 'string',
       },
-    } );
-  }, [ code, slug, config, onChange ] );
+    });
+  }, [code, slug, config, onChange]);
 
   return null;
 };

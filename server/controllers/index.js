@@ -1,6 +1,6 @@
 'use strict';
 
-const snippet = require( './snippet' );
+const snippet = require('./snippet');
 
 module.exports = {
   snippet,

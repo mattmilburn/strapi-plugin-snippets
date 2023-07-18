@@ -1,8 +1,8 @@
 'use strict';
 
-const { transformSnippets } = require( './middlewares' );
+const { transformSnippets } = require('./middlewares');
 
-module.exports = async params => {
+module.exports = async (params) => {
   // Middlewares.
-  await transformSnippets( params );
+  await transformSnippets(params);
 };
