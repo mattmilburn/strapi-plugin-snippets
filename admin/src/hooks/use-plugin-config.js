@@ -5,17 +5,17 @@ import { request, useNotification } from '@strapi/helper-plugin';
 import { ACTION_RESOLVE_CONFIG } from '../constants';
 import { pluginId } from '../utils';
 
-const fetchConfig = async ( toggleNotification ) => {
+const fetchConfig = async (toggleNotification) => {
   try {
     const endpoint = `/${pluginId}/config`;
-    const data = await request( endpoint, { method: 'GET' } );
+    const data = await request(endpoint, { method: 'GET' });
 
     return data ?? {};
-  } catch ( err ) {
-    toggleNotification( {
+  } catch (err) {
+    toggleNotification({
       type: 'warning',
       message: { id: 'notification.error' },
-    } );
+    });
 
     return err;
   }
@@ -26,14 +26,14 @@ const usePluginConfig = () => {
   const toggleNotification = useNotification();
 
   const stateKey = `${pluginId}_config`;
-  const config = useSelector( state => state[ stateKey ].config );
-  const isLoading = useSelector( state => state[ stateKey ].isLoading );
+  const config = useSelector((state) => state[stateKey].config);
+  const isLoading = useSelector((state) => state[stateKey].isLoading);
 
-  useEffect( () => {
-    fetchConfig( toggleNotification ).then( data => {
-      dispatch( { type: ACTION_RESOLVE_CONFIG, data } );
-    } );
-  }, [ dispatch, toggleNotification ] );
+  useEffect(() => {
+    fetchConfig(toggleNotification).then((data) => {
+      dispatch({ type: ACTION_RESOLVE_CONFIG, data });
+    });
+  }, [dispatch, toggleNotification]);
 
   return { isLoading, config };
 };

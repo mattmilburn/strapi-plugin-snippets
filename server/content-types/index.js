@@ -1,10 +1,10 @@
 'use strict';
 
-const lifecycles = require( './snippet/lifecycles' );
-const schema = require( './snippet/schema' );
+const lifecycles = require('./snippet/lifecycles');
+const schema = require('./snippet/schema');
 
 module.exports = {
-  'snippet': {
+  snippet: {
     schema,
     lifecycles,
   },

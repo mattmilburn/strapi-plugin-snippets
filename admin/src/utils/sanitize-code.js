@@ -1,15 +1,15 @@
 import { REGEX_NON_ALPHANUMERIC } from '../constants';
 
-const sanitizeCode = ( code, config = {} ) => {
+const sanitizeCode = (code, config = {}) => {
   let value = code;
 
   // Maybe apply uppercase format.
-  if ( config.uppercase ) {
+  if (config.uppercase) {
     value = value.toUpperCase();
   }
 
   // Sanitize value to remove unwanted characters.
-  value = value.replace( REGEX_NON_ALPHANUMERIC, '' );
+  value = value.replace(REGEX_NON_ALPHANUMERIC, '');
 
   return value;
 };
