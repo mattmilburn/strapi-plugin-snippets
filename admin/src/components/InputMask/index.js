@@ -22,7 +22,7 @@ const InputMask = () => {
         type: 'string',
       },
     } );
-  }, [ code, slug ] );
+  }, [ code, slug, config, onChange ] );
 
   return null;
 };
