@@ -8,6 +8,7 @@ const jestConfig = {
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/server/**/*.{js,cjs}',
+    '<rootDir>/admin/src/**/*.{js,cjs}',
     '!**/node_modules/**',
     '!**/constants/**',
   ],
