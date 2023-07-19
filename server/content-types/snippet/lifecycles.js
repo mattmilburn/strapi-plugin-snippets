@@ -1,5 +1,7 @@
 'use strict';
 
+const has = require('lodash/has');
+
 const { getService, getStrAttrs } = require('../../utils');
 
 module.exports = {
@@ -48,6 +50,10 @@ module.exports = {
       return;
     }
 
+    /**
+     * @TODO - Refactor the logic below into service methods.
+     */
+
     const configService = getService('config');
     const snippetService = getService('snippets');
     const uids = await configService.uids();
@@ -63,40 +69,45 @@ module.exports = {
         };
 
         return strapi.entityService.findMany(uid, { filters }).then((entries) => {
-          if (!entries || !entries.length) {
-            // Always return an array, which helps normalize code that operates
-            // with both singleType and collectionTypes.
-            return [];
-          }
-
-          /**
-           * @TODO - Investigate how `entry` goes unused in the map loop.
-           */
-          return entries
-            .filter((entry) => entry)
-            .map((entry) => ({
+          // Return singleType results.
+          if (has(entries, 'id')) {
+            return {
               uid,
               attrs,
-              entries,
-            }));
+              entries: [entries],
+            };
+          }
+
+          // Return collectionType results.
+          if (entries && entries.length) {
+            return {
+              uid,
+              attrs,
+              entries: entries.filter((entry) => entry),
+            };
+          }
+
+          return null;
         });
       })
     );
 
     // Update entries to replace the previous `code` value with the new one.
-    const promisedUpdates = promisedFinds.flat().map(({ uid, attrs, entries }) => {
-      return entries.map((entry) => {
-        const data = attrs.reduce(
-          (acc, attr) => ({
-            ...acc,
-            [attr]: snippetService.updateSnippetInValue(entry[attr], previousValue, nextValue),
-          }),
-          {}
-        );
+    const promisedUpdates = promisedFinds
+      .filter((i) => i)
+      .map(({ uid, attrs, entries }) => {
+        return entries.map((entry) => {
+          const data = attrs.reduce(
+            (acc, attr) => ({
+              ...acc,
+              [attr]: snippetService.updateSnippetInValue(entry[attr], previousValue, nextValue),
+            }),
+            {}
+          );
 
-        return strapi.entityService.update(uid, entry.id, { data });
+          return strapi.entityService.update(uid, entry.id, { data });
+        });
       });
-    });
 
     await Promise.all(promisedUpdates);
   },
