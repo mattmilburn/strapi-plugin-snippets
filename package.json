@@ -29,7 +29,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ./",
     "format": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
     "format:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
-    "test": "jest --testPathPattern='\\/__tests__\\/.*\\.(?:test|spec)\\.js$' --ci  2>&1"
+    "test": "jest --testPathPattern='\\/__tests__\\/.*\\.(?:test|spec)\\.js$' --ci 2>&1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -43,6 +43,11 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-redux": "^8.0.5"
+  },
+  "peerDependencies": {
+    "@strapi/helper-plugin": "^4.9.0",
+    "@strapi/strapi": "^4.9.0",
+    "@strapi/utils": "^4.9.0"
   },
   "devDependencies": {
     "@babel/core": "7.22.9",
@@ -65,11 +70,6 @@
     "jest-junit": "16.0.0",
     "lint-staged": "13.2.3",
     "prettier": "2.8.8"
-  },
-  "peerDependencies": {
-    "@strapi/helper-plugin": "^4.9.0",
-    "@strapi/strapi": "^4.9.0",
-    "@strapi/utils": "^4.9.0"
   },
   "repository": {
     "type": "git",
