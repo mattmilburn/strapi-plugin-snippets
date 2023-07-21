@@ -35,7 +35,7 @@ const jestConfig = {
   roots: ['<rootDir>/admin/src/', '<rootDir>/server/'],
   verbose: true,
   transform: {
-    '\\.[jt]s$': 'babel-jest',
+    '\\.[jt]s$': '@swc/jest',
   },
 };
 
