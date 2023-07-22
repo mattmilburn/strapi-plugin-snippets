@@ -1,6 +1,5 @@
 'use strict';
 
-// eslint-disable-next-line node/no-missing-require
 const { createCoreController } = require('@strapi/strapi').factories;
 
 const { UID_SNIPPET } = require('../constants');
