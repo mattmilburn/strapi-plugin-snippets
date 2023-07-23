@@ -35,7 +35,19 @@ const jestConfig = {
   roots: ['<rootDir>/admin/src/', '<rootDir>/server/'],
   verbose: true,
   transform: {
-    '\\.[jt]s$': '@swc/jest',
+    '\\.[jt]s$': [
+      '@swc/jest',
+      {
+        jsc: {
+          parser: {
+            jsx: true,
+            dynamicImport: true,
+          },
+          // this should match the minimum supported node.js version
+          target: 'es2020',
+        },
+      },
+    ],
   },
 };
 
