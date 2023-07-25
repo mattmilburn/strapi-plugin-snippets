@@ -47,7 +47,7 @@ Use the `allow` and `deny` props of `contentTypes` to include or exclude certain
 'use strict';
 
 module.exports = {
-  'snippets': {
+  snippets: {
     config: {
       contentTypes: {
         allow: [ 'plugin::menus.menu', 'plugin::menus.menu-item' ],
@@ -73,7 +73,7 @@ If true, unmatched `codes` will remain unparsed in response data, otherwise they
 'use strict';
 
 module.exports = {
-  'snippets': {
+  snippets: {
     config: {
       ignoreUnmatched: false,
     },
@@ -140,7 +140,7 @@ If true, the plugin will apply uppercase formatting to the `code` value when a s
 'use strict';
 
 module.exports = {
-  'snippets': {
+  snippets: {
     config: {
       uppercase: false,
     },
