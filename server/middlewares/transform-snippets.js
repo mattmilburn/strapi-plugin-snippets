@@ -2,44 +2,68 @@
 
 const has = require('lodash/has');
 const head = require('lodash/head');
-const isArray = require('lodash/isArray');
-const isString = require('lodash/isString');
+const isPlainObject = require('lodash/isPlainObject');
+const omit = require('lodash/omit');
 
 const { getService, interpolate, isApiRequest } = require('../utils');
 
+const ignoreFields = ['id', '__component', 'createdAt', 'publishedAt', 'updatedAt', 'locale'];
+
 // Transform function which is used to transform the response object.
 const transform = (data, config, snippets) => {
-  // Single entry.
-  if (has(data, 'attributes')) {
-    return transform(data.attributes, config, snippets);
+  if (!data) {
+    return data;
   }
 
-  // Collection of entries.
-  if (isArray(data) && data.length && has(head(data), 'attributes')) {
+  // Entity or relation wrapper.
+  if (has(data, 'data')) {
+    return {
+      ...data,
+      data: transform(data.data, config, snippets),
+    };
+  }
+
+  // Entity or relation data.
+  if (has(data, 'attributes')) {
+    return {
+      ...data,
+      attributes: transform(data.attributes, config, snippets),
+    };
+  }
+
+  // Support strapi-plugin-transformer features which might remove `attributes`
+  // and `data` wrappers.
+  if (has(data, 'id')) {
+    return {
+      ...data,
+      // Must omit the id otherwise it creates an infinite loop.
+      ...transform(omit(data, 'id'), config, snippets),
+    };
+  }
+
+  // Collection of entities, relations, or components.
+  if (
+    Array.isArray(data) &&
+    (has(head(data), 'attributes') || has(head(data), 'id') || has(head(data), '__component'))
+  ) {
     return data.map((item) => transform(item, config, snippets));
   }
 
-  // Loop through properties.
-  Object.entries(data).forEach(([key, value]) => {
-    if (!value) {
-      return;
-    }
+  // Loop to transform properties.
+  if (isPlainObject(data)) {
+    Object.entries(data).forEach(([key, value]) => {
+      if (ignoreFields.includes(key)) {
+        return;
+      }
 
-    // Single component.
-    if (has(value, 'id')) {
       data[key] = transform(value, config, snippets);
-    }
+    });
+  }
 
-    // Repeatable component or dynamic zone.
-    if (isArray(value) && has(head(value), 'id')) {
-      data[key] = value.map((component) => transform(component, config, snippets));
-    }
-
-    // Finally, replace the shortcode in string values.
-    if (isString(value)) {
-      data[key] = interpolate(value, snippets, config.ignoreUnmatched);
-    }
-  });
+  // Finally, replace the shortcode in string values.
+  if (typeof data === 'string') {
+    return interpolate(data, snippets, config.ignoreUnmatched);
+  }
 
   return data;
 };
