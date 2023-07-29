@@ -6,7 +6,5 @@ module.exports = {
     ignoreUnmatched: false,
     uppercase: true,
   },
-  validator: () => {
-    // @TODO - Handle plugin config validation here.
-  },
+  validator: () => {},
 };
