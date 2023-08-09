@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 import { UID_SNIPPET } from '../../constants';
-import { pluginId, sanitizeCode } from '../../utils';
+import { usePluginConfig } from '../../hooks';
+import { sanitizeCode } from '../../utils';
 
 const InputMask = () => {
-  const { config } = useSelector((state) => state[`${pluginId}_config`]);
+  const { data: config } = usePluginConfig();
   const { modifiedData, onChange, slug } = useCMEditViewDataManager();
   const code = modifiedData?.code;
 
