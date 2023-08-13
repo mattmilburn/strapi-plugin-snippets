@@ -9,7 +9,7 @@ const { getService, interpolate, isApiRequest } = require('../utils');
 
 const ignoreFields = ['id', '__component', 'createdAt', 'publishedAt', 'updatedAt', 'locale'];
 
-// Transform function which is used to transform the response object.
+// Transform function used to transform the response object.
 const transform = (data, config, snippets) => {
   if (!data) {
     return data;
@@ -68,7 +68,7 @@ const transform = (data, config, snippets) => {
   return data;
 };
 
-// Transform API response by parsing data string to JSON for rich text fields.
+// Transform API response.
 module.exports = async ({ strapi }) => {
   strapi.server.use(async (ctx, next) => {
     await next();
@@ -78,9 +78,8 @@ module.exports = async ({ strapi }) => {
     }
 
     // Do nothing if this model is not supported or there are no snippets in the database.
-    const configService = getService('config');
-    const config = await configService.get();
-    const uids = await configService.uids();
+    const config = await getService('config').get();
+    const uids = await getService('config').uids();
     const uid = uids.find((_uid) => ctx.state.route.handler.includes(_uid));
     const snippets = await getService('snippets').get();
 
