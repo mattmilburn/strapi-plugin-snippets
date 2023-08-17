@@ -1,4 +1,4 @@
-import { Initializer, InputMask } from './components';
+import { InputMask } from './components';
 import reducers from './reducers';
 import { pluginId, pluginName } from './utils';
 
@@ -14,8 +14,6 @@ export default {
     app.registerPlugin({
       id: pluginId,
       name: pluginName,
-      initializer: Initializer,
-      isReady: false,
     });
   },
 };
