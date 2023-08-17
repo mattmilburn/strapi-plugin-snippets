@@ -9,7 +9,7 @@ module.exports = {
     const { params } = event;
     const { data } = params;
 
-    await getService('validation').validateFormat(data.code);
+    getService('validation').validateFormat(data.code);
 
     // Maybe apply uppercase formatting to the `code` value.
     const config = await getService('config').get();
@@ -23,7 +23,7 @@ module.exports = {
     const { model, params } = event;
     const { data, where } = params;
 
-    await getService('validation').validateFormat(data.code);
+    getService('validation').validateFormat(data.code);
 
     // Maybe apply uppercase formatting to the `code` value.
     const config = await getService('config').get();

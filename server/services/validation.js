@@ -5,7 +5,7 @@ const { ValidationError } = require('@strapi/utils').errors;
 const { REGEX_ALPHANUMERIC_VAR } = require('../constants');
 
 module.exports = () => ({
-  async validateFormat(value) {
+  validateFormat(value) {
     const validFormat = REGEX_ALPHANUMERIC_VAR.test(value);
 
     if (!validFormat) {
