@@ -6,8 +6,8 @@ import { usePluginConfig } from '../../hooks';
 import { sanitizeCode } from '../../utils';
 
 const InputMask = () => {
-  const { data: config } = usePluginConfig();
   const { modifiedData, onChange, slug } = useCMEditViewDataManager();
+  const { data: config } = usePluginConfig();
   const code = modifiedData?.code;
 
   useEffect(() => {
@@ -15,10 +15,17 @@ const InputMask = () => {
       return;
     }
 
+    const sanitizedCode = sanitizeCode(code, config);
+
+    // Only call `onChange` if the sanitized value is different.
+    if (code === sanitizedCode) {
+      return;
+    }
+
     onChange({
       target: {
         name: 'code',
-        value: sanitizeCode(code, config),
+        value: sanitizedCode,
         type: 'string',
       },
     });
