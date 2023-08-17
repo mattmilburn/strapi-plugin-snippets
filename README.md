@@ -183,7 +183,6 @@ yarn develop
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
 
 ## <a id="roadmap"></a>🚧 Roadmap
-* Option to transform string type fields as number types in API response.
 * Edit view sidebar button to view and copy/paste snippet codes.
 * Reserved snippet codes for things like `CURRENT_YEAR`.
 * Localization support.
