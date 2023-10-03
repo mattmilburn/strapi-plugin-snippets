@@ -26,6 +26,8 @@
 yarn add strapi-plugin-snippets@latest
 ```
 
+Don't forget to **restart or rebuild** your Strapi app when installing a new plugin.
+
 ## <a id="configuration"></a>🔧 Configuration
 | property | type (default) | description |
 | - | - | - |
