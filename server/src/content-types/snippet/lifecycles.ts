@@ -1,10 +1,8 @@
-'use strict';
+import has from 'lodash/has';
 
-const has = require('lodash/has');
+import { getService, getStrAttrs } from '../../utils';
 
-const { getService, getStrAttrs } = require('../../utils');
-
-module.exports = {
+const snippetsLifecycles = {
   beforeCreate: async (event) => {
     const { params } = event;
     const { data } = params;
@@ -112,3 +110,5 @@ module.exports = {
     await Promise.all(promisedUpdates);
   },
 };
+
+export default snippetsLifecycles;

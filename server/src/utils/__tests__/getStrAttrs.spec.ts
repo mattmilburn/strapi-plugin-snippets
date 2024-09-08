@@ -1,6 +1,4 @@
-'use strict';
-
-const getStrAttrs = require('../get-str-attrs');
+import getStrAttrs from '../getStrAttrs';
 
 describe('getStrAttrs', () => {
   // eslint-disable-next-line no-unused-vars
@@ -33,7 +31,7 @@ describe('getStrAttrs', () => {
           },
         },
       }),
-    };
+    } as any;
   });
 
   it('should return string type attributes defined for a model', () => {
