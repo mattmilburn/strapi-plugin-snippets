@@ -1,6 +1,6 @@
-'use strict';
+import { type UID } from '@strapi/strapi';
 
-const getStrAttrs = (uid) => {
+const getStrAttrs = (uid: UID.ContentType): string[] => {
   const model = strapi.getModel(uid);
 
   if (!model) {
@@ -15,4 +15,4 @@ const getStrAttrs = (uid) => {
   });
 };
 
-module.exports = getStrAttrs;
+export default getStrAttrs;

@@ -1,6 +1,4 @@
-'use strict';
-
-const isApiRequest = require('../is-api-request');
+import isApiRequest from '../isApiRequest';
 
 describe('isApiRequest', () => {
   it('should return `true` if route info type is `content-api`', () => {

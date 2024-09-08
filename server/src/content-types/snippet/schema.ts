@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = {
+const snippetsSchema = {
   kind: 'collectionType',
   collectionName: 'snippets',
   info: {
@@ -32,3 +30,5 @@ module.exports = {
     },
   },
 };
+
+export default snippetsSchema;

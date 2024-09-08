@@ -1,6 +1,4 @@
-'use strict';
-
-const interpolate = require('../interpolate');
+import interpolate from '../interpolate';
 
 describe('interpolate', () => {
   it('should populate snippet codes into a string', () => {

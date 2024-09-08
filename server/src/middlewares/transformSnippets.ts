@@ -1,16 +1,15 @@
-'use strict';
+import { type Core } from '@strapi/strapi';
+import has from 'lodash/has';
+import head from 'lodash/head';
+import isPlainObject from 'lodash/isPlainObject';
+import omit from 'lodash/omit';
 
-const has = require('lodash/has');
-const head = require('lodash/head');
-const isPlainObject = require('lodash/isPlainObject');
-const omit = require('lodash/omit');
-
-const { getService, interpolate, isApiRequest } = require('../utils');
+import { getService, interpolate, isApiRequest } from '../utils';
 
 const ignoreFields = ['id', '__component', 'createdAt', 'publishedAt', 'updatedAt', 'locale'];
 
 // Transform function used to transform the response object.
-const transform = (data, config, snippets) => {
+const transform = (data, config, snippets): any => {
   if (!data) {
     return data;
   }
@@ -69,7 +68,7 @@ const transform = (data, config, snippets) => {
 };
 
 // Transform API response.
-module.exports = async ({ strapi }) => {
+const transformMiddleware = async (strapi: Core.Strapi) => {
   strapi.server.use(async (ctx, next) => {
     await next();
 
@@ -90,3 +89,5 @@ module.exports = async ({ strapi }) => {
     ctx.body.data = transform(ctx.body.data, config, snippets);
   });
 };
+
+export default transformMiddleware;

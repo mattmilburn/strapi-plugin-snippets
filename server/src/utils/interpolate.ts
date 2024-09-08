@@ -1,9 +1,11 @@
-'use strict';
-
-const interpolate = (originalStr, data = {}, ignoreUnmatched = false) => {
+const interpolate = (
+  originalStr: string,
+  data: any = {},
+  ignoreUnmatched: boolean = false,
+): string => {
   let str = originalStr;
 
-  Object.entries(data).forEach(([key, value]) => {
+  Object.entries(data).forEach(([key, value]: [string, string]) => {
     // eslint-disable-next-line prefer-regex-literals
     str = str.replace(new RegExp(`{${key}}`, 'g'), value);
   });
@@ -18,4 +20,4 @@ const interpolate = (originalStr, data = {}, ignoreUnmatched = false) => {
   return str;
 };
 
-module.exports = interpolate;
+export default interpolate;
