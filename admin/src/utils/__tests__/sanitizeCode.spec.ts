@@ -1,4 +1,4 @@
-import sanitizeCode from '../sanitize-code';
+import sanitizeCode from '../sanitizeCode';
 
 describe('sanitizeCode', () => {
   it('should remove any non-alphanumeric characters', () => {

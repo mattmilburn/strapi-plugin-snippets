@@ -1,4 +1,4 @@
-import pluginId from './utils/plugin-id';
+import pluginId from './utils/pluginId';
 
 export const ACTION_RESOLVE_CONFIG = `${pluginId}/resolve-config`;
 

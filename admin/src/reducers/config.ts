@@ -1,8 +1,9 @@
 import produce from 'immer';
 
+import { type SnippetsPluginConfig } from '../../../server/src/config';
 import { ACTION_RESOLVE_CONFIG } from '../constants';
 
-const initialState = {
+const initialState: SnippetsPluginConfig = {
   contentTypes: null,
   ignoreUnmatched: false,
   uppercase: true,

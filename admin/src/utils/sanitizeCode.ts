@@ -1,6 +1,7 @@
+import { type SnippetsPluginConfig } from '../../../server/src/config';
 import { REGEX_NON_ALPHANUMERIC } from '../constants';
 
-const sanitizeCode = (code, config = {}) => {
+const sanitizeCode = (code: string, config: SnippetsPluginConfig = {}): string => {
   let value = code;
 
   // Maybe apply uppercase format.
