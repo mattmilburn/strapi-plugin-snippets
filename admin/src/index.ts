@@ -3,10 +3,10 @@ import reducers from './reducers';
 import { pluginId, pluginName } from './utils';
 
 export default {
-  register(app) {
+  register(app: any) {
     app.addReducers(reducers);
 
-    app.injectContentManagerComponent('editView', 'right-links', {
+    app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
       name: pluginId,
       Component: InputMask,
     });
