@@ -9,7 +9,7 @@ import { getService, interpolate, isApiRequest } from '../utils';
 const ignoreFields = ['id', '__component', 'createdAt', 'publishedAt', 'updatedAt', 'locale'];
 
 // Transform function used to transform the response object.
-const transform = (data, config, snippets): any => {
+const transform = (data: object, config, snippets): any => {
   if (!data) {
     return data;
   }
