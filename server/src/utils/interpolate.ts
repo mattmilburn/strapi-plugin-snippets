@@ -1,7 +1,7 @@
 const interpolate = (
   originalStr: string,
   data: any = {},
-  ignoreUnmatched: boolean = false,
+  ignoreUnmatched: boolean = false
 ): string => {
   let str = originalStr;
 

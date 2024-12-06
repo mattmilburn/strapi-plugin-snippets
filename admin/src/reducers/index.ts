@@ -1,8 +1,8 @@
-import { pluginId } from '../utils';
 import config from './config';
+import { PLUGIN_ID } from '../constants';
 
 const reducers = {
-  [`${pluginId}_config`]: config,
+  [`${PLUGIN_ID}_config`]: config,
 };
 
 export default reducers;
