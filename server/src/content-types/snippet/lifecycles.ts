@@ -1,6 +1,4 @@
-import has from 'lodash/has';
-
-import { getService, getStrAttrs } from '../../utils';
+import { getService } from '../../utils';
 
 const snippetsLifecycles = {
   beforeCreate: async (event) => {
@@ -44,70 +42,18 @@ const snippetsLifecycles = {
     const previousValue = event.state.code;
     const nextValue = event.result.code;
 
-    if (nextValue === previousValue) {
+    if (!previousValue || nextValue === previousValue) {
       return;
     }
 
-    /**
-     * @TODO - Refactor the logic below into service methods.
-     */
-
-    const configService = getService('config');
     const snippetService = getService('snippets');
-    const uids = await configService.uids();
+    const uids = await getService('config').uids();
 
     // Find entries using the previous `code` value so we can update them.
-    const promisedFinds = await Promise.all(
-      uids.map((uid) => {
-        const attrs = getStrAttrs(uid);
-        const filters = {
-          $or: attrs.map((attr) => ({
-            [attr]: { $contains: `{${previousValue}}` },
-          })),
-        };
-
-        return strapi.entityService.findMany(uid, { filters }).then((entries) => {
-          // Return singleType results.
-          if (has(entries, 'id')) {
-            return {
-              uid,
-              attrs,
-              entries: [entries],
-            };
-          }
-
-          // Return collectionType results.
-          if (entries && entries.length) {
-            return {
-              uid,
-              attrs,
-              entries: entries.filter((entry) => entry),
-            };
-          }
-
-          return null;
-        });
-      })
-    );
+    const targetEntries = await snippetService.getEntriesWithSnippet(uids, previousValue);
 
     // Update entries to replace the previous `code` value with the new one.
-    const promisedUpdates = promisedFinds
-      .filter((i) => i)
-      .map(({ uid, attrs, entries }) => {
-        return entries.map((entry) => {
-          const data = attrs.reduce(
-            (acc, attr) => ({
-              ...acc,
-              [attr]: snippetService.updateSnippetInValue(entry[attr], previousValue, nextValue),
-            }),
-            {}
-          );
-
-          return strapi.entityService.update(uid, entry.id, { data });
-        });
-      });
-
-    await Promise.all(promisedUpdates);
+    await snippetService.updateEntriesWithSnippet(targetEntries, previousValue, nextValue);
   },
 };
 

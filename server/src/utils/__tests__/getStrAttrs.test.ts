@@ -1,9 +1,6 @@
 import getStrAttrs from '../getStrAttrs';
 
 describe('getStrAttrs', () => {
-  // eslint-disable-next-line no-unused-vars
-  let strapi;
-
   beforeAll(async () => {
     global.strapi = {
       getModel: jest.fn().mockReturnValue({
