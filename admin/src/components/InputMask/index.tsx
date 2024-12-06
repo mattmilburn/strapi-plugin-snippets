@@ -1,43 +1,34 @@
-import { useEffect } from 'react';
-import { useForm } from '@strapi/strapi/admin';
-// import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+import { useEffect, type ChangeEvent } from 'react';
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
 
-// import { UID_SNIPPET } from '../../constants';
+import { UID_SNIPPET } from '../../constants';
 import { usePluginConfig } from '../../hooks';
-// import { sanitizeCode } from '../../utils';
+import { sanitizeCode } from '../../utils';
 
 const InputMask = () => {
-  // const { modifiedData, onChange, slug } = useEditManager();
-  // const doc = useContentManagerContext();
-  // console.log('DOCUMENT', doc);
-  const modifiedData = useForm('ActionName', ({ values }: any) => values);
-  console.log('MODIFIED', modifiedData);
+  const { form, slug } = useContentManagerContext();
   const { data: config } = usePluginConfig();
-  // const code = modifiedData?.code;
-  // console.log('INPUT', code);
+  const { onChange, values } = form;
+  const code = values?.code;
 
   useEffect(() => {
-    console.log('EFFECT', modifiedData);
-  //   if (slug !== UID_SNIPPET || !code) {
-  //     return;
-  //   }
+    if (slug !== UID_SNIPPET || !code) {
+      return;
+    }
 
-  //   const sanitizedCode = sanitizeCode(code, config);
+    const sanitizedCode = sanitizeCode(code, config);
 
-  //   // Only call `onChange` if the sanitized value is different.
-  //   if (code === sanitizedCode) {
-  //     return;
-  //   }
-
-  //   onChange({
-  //     target: {
-  //       name: 'code',
-  //       value: sanitizedCode,
-  //       type: 'string',
-  //     },
-  //   });
-  // }, [code, slug, config, onChange]);
-  }, [config, modifiedData]);
+    // Only call `onChange` if the sanitized value is different.
+    if (code !== sanitizedCode) {
+      onChange({
+        target: {
+          name: 'code',
+          value: sanitizedCode,
+          type: 'string',
+        },
+      } as ChangeEvent<any>);
+    }
+  }, [code, slug, config, onChange]);
 
   return null;
 };
