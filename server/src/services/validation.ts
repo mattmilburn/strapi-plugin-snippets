@@ -2,7 +2,7 @@ import { errors } from '@strapi/utils';
 
 import { REGEX_ALPHANUMERIC_VAR } from '../constants';
 
-type ValidationService = ReturnType<typeof validationService>
+export type ValidationService = ReturnType<typeof validationService>;
 
 const validationService = () => ({
   validateFormat(value: string): void {
@@ -16,5 +16,4 @@ const validationService = () => ({
   },
 });
 
-export { type ValidationService };
 export default validationService;

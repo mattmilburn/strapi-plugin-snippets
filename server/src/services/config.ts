@@ -2,13 +2,13 @@ import { type Core, type UID } from '@strapi/strapi';
 import get from 'lodash/get';
 
 import { defaultConfig, type SnippetsPluginConfig } from '../config';
-import { pluginId } from '../utils';
+import { PLUGIN_ID } from '../constants';
 
-type ConfigService = ReturnType<typeof configService>;
+export type ConfigService = ReturnType<typeof configService>;
 
 const configService = ({ strapi }: { strapi: Core.Strapi }) => ({
   async get(): Promise<SnippetsPluginConfig> {
-    const config = await strapi.config.get(`plugin::${pluginId}`, defaultConfig);
+    const config = await strapi.config.get(`plugin::${PLUGIN_ID}`, defaultConfig);
 
     return config;
   },
@@ -30,5 +30,4 @@ const configService = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 });
 
-export { type ConfigService };
 export default configService;
