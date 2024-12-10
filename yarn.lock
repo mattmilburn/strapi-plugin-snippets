@@ -2787,7 +2787,7 @@
     typescript "5.4.4"
     yup "0.32.9"
 
-"@strapi/strapi@^5.4.0":
+"@strapi/strapi@^5.5.0":
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@strapi/strapi/-/strapi-5.5.0.tgz#04fb09eba6a8b14da3c7af2411baf116ebc84c87"
   integrity sha512-BYlyxZidg6SSwhIDfq1UhuXSzH/O3Zjt+54x30oegipgRk61MtWHV32RaNSgvz6XKorMhBQ3Asfn9g8MdfFkfA==
@@ -2878,7 +2878,7 @@
     typedoc-github-wiki-theme "1.1.0"
     typedoc-plugin-markdown "3.17.1"
 
-"@strapi/typescript-utils@5.5.0", "@strapi/typescript-utils@^5.4.0":
+"@strapi/typescript-utils@5.5.0", "@strapi/typescript-utils@^5.5.0":
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.5.0.tgz#8570320e75f0c288ef84ce235f0a8f2ea882902d"
   integrity sha512-f5/0udrRo8sGSczyK9b9/WlOG0/3mye/3qZmGHZtfrK5Dm4eUuYoHtL01YcOv10IMXSfp/Mc98rsrtb6iBN3zQ==
@@ -2947,7 +2947,7 @@
     sharp "0.32.6"
     yup "0.32.9"
 
-"@strapi/utils@5.5.0", "@strapi/utils@^5.4.0":
+"@strapi/utils@5.5.0", "@strapi/utils@^5.5.0":
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-5.5.0.tgz#9a1b5fed03dff95d85c4ae5919cee01214d1ca08"
   integrity sha512-qxfQwpTYDXij7XyMjMEVGyu4kugv1OMfbe7lM+WABUrIRHi4qwMpDE8rcPmctQsdBwaMNg5qf/6bJ9U3lYI4qQ==
