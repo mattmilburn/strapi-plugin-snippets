@@ -2,6 +2,14 @@
   <img style="width: 160px; height: auto;" src="public/logo-2x.png" alt="Logo for Strapi snippets plugin" />
   <h1>Strapi Snippets</h1>
   <p>A plugin for Strapi CMS that populates custom snippets into API response data.</p>
+  <p>
+    <a href="https://www.npmjs.com/package/strapi-plugin-snippets">
+      <img src="https://img.shields.io/npm/v/strapi-plugin-snippets.svg" alt="Latest npm version" />
+    </a>
+    <a href="https://strapi.io">
+      <img src="https://img.shields.io/badge/strapi-v5-blue" alt="Strapi supported version" />
+    </a>
+  </p>
   <img style="width: 960px; height: auto;" src="public/screenshot.png" alt="Screenshot for Strapi snippets plugin" />
 </div>
 
@@ -9,9 +17,11 @@
 
 * [Features](#features)
 * [Installation](#installation)
+* [Compatability](#compatability)
 * [Configuration](#configuration)
 * [User Guide](#user-guide)
 * [Troubleshooting](#troubleshooting)
+* [Migration](#migration)
 * [Support or Donate](#donate)
 * [Roadmap](#roadmap)
 
@@ -27,6 +37,12 @@ yarn add strapi-plugin-snippets@latest
 ```
 
 Don't forget to **restart or rebuild** your Strapi app when installing a new plugin.
+
+## <a id="compatability"></a>🔩 Compatibility
+| Strapi version | Plugin version |
+| - | - |
+| v5 | v2 |
+| v4 | v1 |
 
 ## <a id="configuration"></a>🔧 Configuration
 | property | type (default) | description |
@@ -44,20 +60,18 @@ Use the `allow` and `deny` props of `contentTypes` to include or exclude certain
 
 #### Example
 
-```js
-// ./config/plugins.js`
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   snippets: {
     config: {
       contentTypes: {
-        allow: [ 'plugin::menus.menu', 'plugin::menus.menu-item' ],
-        deny: [ 'api::example.example', 'comp.example-component' ],
+        allow: ['plugin::menus.menu', 'plugin::menus.menu-item'],
+        deny: ['api::example.example', 'category.example-component'],
       },
     },
   },
-};
+});
 ```
 | UID type | Format |
 | - | - |
@@ -70,17 +84,15 @@ If true, unmatched `codes` will remain unparsed in response data, otherwise they
 
 #### Example
 
-```js
-// ./config/plugins.js`
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   snippets: {
     config: {
       ignoreUnmatched: false,
     },
   },
-};
+});
 ```
 
 Consider a scenario where we have 2 snippets, one called `SNIPPET_ONE` and another called `SNIPPET_TWO` and both will be replaced with the string "foobar". We also have an entity with a `title` and `summary` fields where both fields use snippets.
@@ -93,10 +105,8 @@ The snippet named `SNIPPET_MISSING` does not actually exist and will either be r
 {
   "data": {
     "id": 1,
-    "attributes": {
-      "title": "Testing snippet {SNIPPET_ONE} and {SNIPPET_MISSING}.",
-      "summary": "Testing snippet {SNIPPET_ONE} and {SNIPPET_TWO}."
-    }
+    "title": "Testing snippet {SNIPPET_ONE} and {SNIPPET_MISSING}.",
+    "summary": "Testing snippet {SNIPPET_ONE} and {SNIPPET_TWO}."
   },
   "meta": {}
 }
@@ -108,10 +118,8 @@ The snippet named `SNIPPET_MISSING` does not actually exist and will either be r
 {
   "data": {
     "id": 1,
-    "attributes": {
-      "title": "Testing snippet foobar and {SNIPPET_MISSING}.",
-      "summary": "Testing snippet foobar and foobar."
-    }
+    "title": "Testing snippet foobar and {SNIPPET_MISSING}.",
+    "summary": "Testing snippet foobar and foobar."
   },
   "meta": {}
 }
@@ -123,31 +131,27 @@ The snippet named `SNIPPET_MISSING` does not actually exist and will either be r
 {
   "data": {
     "id": 1,
-    "attributes": {
-      "title": "Testing snippet foobar and .",
-      "summary": "Testing snippet foobar and foobar."
-    }
+    "title": "Testing snippet foobar and .",
+    "summary": "Testing snippet foobar and foobar."
   },
   "meta": {}
 }
 ```
 
 ### `uppercase`
-If true, the plugin will apply uppercase formatting to the `code` value when a snippet is created or updated.
+If true, the plugin will apply uppercase formatting to the `code` value when a snippet is created or updated. This is also enforced while typing in the `code` input field.
 
 #### Example
 
-```js
-// ./config/plugins.js`
-'use strict';
-
-module.exports = {
+```ts
+// ./config/plugins.ts`
+export default () => ({
   snippets: {
     config: {
       uppercase: false,
     },
   },
-};
+});
 ```
 
 ## <a id="user-guide"></a>📘 User Guide
@@ -180,6 +184,9 @@ yarn build
 # OR
 yarn develop
 ```
+
+## <a id="migration"></a>🚌 Migration
+Follow the [migration guides](MIGRATION.md) to keep your snippets plugin up-to-date.
 
 ## <a id="donate"></a>❤️ Support or Donate
 If you are enjoying this plugin and feel extra appreciative, you can [buy me a beer or 3 🍺🍺🍺](https://www.buymeacoffee.com/mattmilburn).
