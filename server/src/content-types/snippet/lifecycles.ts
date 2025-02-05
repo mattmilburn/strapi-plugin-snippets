@@ -50,10 +50,10 @@ const snippetsLifecycles = {
     const uids = await getService('config').uids();
 
     // Find entries using the previous `code` value so we can update them.
-    const targetEntries = await snippetService.getEntriesWithSnippet(uids, previousValue);
+    const entriesToUpdate = await snippetService.getEntriesWithSnippet(uids, previousValue);
 
     // Update entries to replace the previous `code` value with the new one.
-    await snippetService.updateEntriesWithSnippet(targetEntries, previousValue, nextValue);
+    await snippetService.updateEntriesWithSnippet(entriesToUpdate, previousValue, nextValue);
   },
 };
 
