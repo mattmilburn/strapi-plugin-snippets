@@ -12,7 +12,7 @@ export interface EntriesWithSnippet {
 }
 
 const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
-  async get(): Promise<any> {
+  async get(): Promise<Record<string, string>> {
     const entries = strapi
       .documents(UID_SNIPPET)
       .findMany()
@@ -36,29 +36,23 @@ const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
     const entries = await Promise.all(
       uids.map((uid) => {
         const attrs = getStrAttrs(uid);
+
+        if (!attrs.length) {
+          return null;
+        }
+
+        // Build filters object to help find entries that contain the previous snippet code.
         const filters = {
           $or: attrs.map((attr) => ({
             [attr]: { $contains: `{${previousValue}}` },
           })),
         };
 
-        return strapi
-          .documents(uid)
+        // Find document entries and components that contain the previous snippet code.
+        return strapi.db
+          .query(uid)
           .findMany({ filters })
           .then((entries) => {
-            /**
-             * @TODO - This should not be necessary in v5. Entries will always be an array.
-             */
-            // Return singleType results.
-            // if (has(entries, 'id')) {
-            //   return {
-            //     uid,
-            //     attrs,
-            //     entries: [entries],
-            //   };
-            // }
-
-            // Return collectionType results.
             if (entries && entries.length) {
               return {
                 uid,
@@ -72,11 +66,11 @@ const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
       })
     );
 
-    return entries.filter(Boolean);
+    return entries.filter(Boolean) as EntriesWithSnippet[];
   },
 
   async updateEntriesWithSnippet(
-    entriesWithSnippet: any[],
+    entriesWithSnippet: EntriesWithSnippet[],
     previousValue: string,
     nextValue: string
   ): Promise<void> {
@@ -92,20 +86,17 @@ const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
             return { ...acc, [attr]: value };
           }, {});
 
-          return strapi.documents(uid).update({
-            /**
-             * @TODO - What is the appropriate way to update here?
-             * @TODO - Need to understand publish/draft/delete cycle here.
-             */
-            documentId: entry.documentId,
+          return strapi.db.query(uid).update({
             data,
+            where: {
+              id: entry.id,
+            },
           });
         });
       })
       .flat();
 
-    const finished = await Promise.all(promisedUpdates);
-    console.log('FINISHED', finished);
+    await Promise.all(promisedUpdates);
   },
 });
 
