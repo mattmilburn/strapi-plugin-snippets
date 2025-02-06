@@ -19,6 +19,9 @@ describe('getStrAttrs', () => {
             multiple: false,
             allowedTypes: ['images'],
           },
+          email: {
+            type: 'email',
+          },
           publish_date: {
             type: 'date',
           },
@@ -33,7 +36,7 @@ describe('getStrAttrs', () => {
 
   it('should return string type attributes defined for a model', () => {
     const input = 'api::example.example';
-    const output = ['title', 'summary', 'content', 'custom'];
+    const output = ['title', 'summary', 'content', 'email', 'custom'];
     const result = getStrAttrs(input);
 
     expect(result).toEqual(output);
