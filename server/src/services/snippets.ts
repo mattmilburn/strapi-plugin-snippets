@@ -1,7 +1,7 @@
 import { type Core, type UID } from '@strapi/strapi';
 
 import { UID_SNIPPET } from '../constants';
-import { getStrAttrs } from '../utils';
+import { getParsableAttrs } from '../utils';
 
 export type SnippetsService = ReturnType<typeof snippetsService>;
 
@@ -35,7 +35,7 @@ const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
   ): Promise<EntriesWithSnippet[]> {
     const entries = await Promise.all(
       uids.map((uid) => {
-        const attrs = getStrAttrs(uid);
+        const attrs = getParsableAttrs(uid);
 
         if (!attrs.length) {
           return null;
@@ -78,10 +78,19 @@ const snippetsService = ({ strapi }: { strapi: Core.Strapi }) => ({
       .map(({ uid, attrs, entries }) => {
         return entries.map((entry) => {
           const data = attrs.reduce((acc, attr) => {
-            const value =
-              typeof entry[attr] !== 'string'
-                ? entry[attr]
-                : entry[attr].replace(`{${previousValue}}`, `{${nextValue}}`);
+            let value = entry[attr];
+
+            // Update string fields.
+            if (typeof entry[attr] === 'string') {
+              value = entry[attr].replace(`{${previousValue}}`, `{${nextValue}}`);
+            }
+
+            // Update block fields.
+            if (Array.isArray(entry[attr])) {
+              value = JSON.parse(
+                JSON.stringify(entry[attr]).replace(`{${previousValue}}`, `{${nextValue}}`)
+              );
+            }
 
             return { ...acc, [attr]: value };
           }, {});
