@@ -8,7 +8,7 @@ const getStrAttrs = (uid: UID.ContentType): string[] => {
   }
 
   const attrs = model.attributes;
-  const supportedFieldTypes = ['customField', 'richtext', 'string', 'text'];
+  const supportedFieldTypes = ['customField', 'email', 'richtext', 'string', 'text'];
 
   return Object.keys(attrs).filter((key) => {
     return supportedFieldTypes.includes(attrs[key].type);
