@@ -171,7 +171,7 @@ After updating the `code` value of a snippet, it will be automatically updated a
 To use snippets in your content, you can type a snippet `code` wrapped in curly braces `{}` in string or text fields and it will be replaced with the `replacement` value when it appears in API response data.
 
 <div align="center">
-  <img style="width: 662px; height: auto;" src="public/screenshot-usage.png" alt="Screenshot for code usage with Strapi snippets plugin" />
+  <img style="width: 680px; height: auto;" src="public/screenshot-usage.png" alt="Screenshot for code usage with Strapi snippets plugin" />
 </div>
 
 ## <a id="troubleshooting"></a>💩 Troubleshooting
