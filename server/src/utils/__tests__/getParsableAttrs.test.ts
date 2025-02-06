@@ -1,6 +1,6 @@
-import getStrAttrs from '../getStrAttrs';
+import getParsableAttrs from '../getParsableAttrs';
 
-describe('getStrAttrs', () => {
+describe('getParsableAttrs', () => {
   beforeAll(async () => {
     global.strapi = {
       getModel: jest.fn().mockReturnValue({
@@ -37,7 +37,7 @@ describe('getStrAttrs', () => {
   it('should return string type attributes defined for a model', () => {
     const input = 'api::example.example';
     const output = ['title', 'summary', 'content', 'email', 'custom'];
-    const result = getStrAttrs(input);
+    const result = getParsableAttrs(input);
 
     expect(result).toEqual(output);
   });
